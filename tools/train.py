@@ -10,6 +10,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 from backbones.hybrid_qcnn import Hybrid_RQCNN
+from backbones.cnn import CNN
 from tools.test import evaluation
 from argparse import ArgumentParser
 
@@ -34,8 +35,10 @@ test_loader = torch.utils.data.DataLoader(X_test, batch_size=ap.batch_size, shuf
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
 print("[INFO] Using {} method".format(ap.method))
-
-net = Hybrid_RQCNN(device, method=ap.method).to(device)
+if ap.method == 'classical':
+    net = CNN(kernel_size=2, depth=4, num_classes=10)
+else:
+    net = Hybrid_RQCNN(kernel_size=2, depth=4, circuit_layers=1, device=device, method=ap.method, num_classes=10).to(device)
 loss_fun = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(net.parameters(), lr=1.e-3)
 
