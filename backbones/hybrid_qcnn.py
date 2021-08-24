@@ -2,7 +2,7 @@ from modules import *
 import torch.nn as nn
 import torch.nn.functional as F
 class Hybrid_RQCNN(nn.Module):
-  def __init__(self, kernel_size, depth, circuit_layers, device, method, num_classes=10):
+  def __init__(self, kernel_size, depth, circuit_layers, device, method, num_classes=3):
     super(Hybrid_RQCNN, self).__init__()
     self.rqcnn = RQCNN(kernel_size=2, depth=4, device=device, circuit_layers=1, method=method)
     self.pool = nn.MaxPool2d(2)

@@ -13,6 +13,11 @@ def evaluation(net, test_loader, loss_func, device, epoch, save_dir):
         images = images.to(device)
         labels = labels.to(device)
 
+        if labels.item() == 6:
+            labels = torch.tensor([1])
+        if labels.item() == 9:
+            labels = torch.tensor([2])
+
         out = net(images)
         _, predicted = torch.max(out, 1)
         loss = loss_func(out, labels).to(device)
