@@ -162,10 +162,10 @@ class SPQCNN(nn.Module):
         self.kernel_size = kernel_size
         self.depth = depth
         if self.kernel_size ** 2 >= self.depth:
-            self.n_qubits = self.kernel_size ** 2
+            self.n_qubits = self.kernel_size ** 2 +1
         else:
             self.n_qubits = self.depth
-        self.circuit_layers = circuit_layers
+        self.circuit_layers = circuit_layers +1
         self.device = device
 
         dev = qml.device("default.qubit", wires=self.n_qubits)
@@ -203,7 +203,7 @@ class SPQCNN(nn.Module):
 
     def flatten(self, t, idx):
         t = t.reshape(1, -1)
-        idx = torch.tensor(idx, dtype=torch.float).reshape(1,1)
+        idx = torch.tensor(idx, dtype=torch.float).reshape(1,1).to(self.device)
         result = torch.cat((t, idx), dim=-1)
 
         result = result.squeeze()

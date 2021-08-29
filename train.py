@@ -70,7 +70,7 @@ for epoch in range(ap.num_epoches):
             labels = torch.tensor([1])
         if labels.item() == 9:
             labels = torch.tensor([2])
-
+        labels = labels.to(device)
         optimizer.zero_grad()
         output = net(images)
         _, predicted = torch.max(output, 1)

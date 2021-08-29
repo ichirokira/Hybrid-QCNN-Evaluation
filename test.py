@@ -6,7 +6,7 @@ def evaluation(net, test_loader, loss_func, device, epoch, save_dir):
     correct = 0
     total = 0
     avg_loss = 0
-    n_samples = 1000
+    n_samples = 500
     for i, (images, labels) in enumerate(test_loader):
         if i == n_samples:
             break
@@ -17,7 +17,7 @@ def evaluation(net, test_loader, loss_func, device, epoch, save_dir):
             labels = torch.tensor([1])
         if labels.item() == 9:
             labels = torch.tensor([2])
-
+        labels = labels.to(device)
         out = net(images)
         _, predicted = torch.max(out, 1)
         loss = loss_func(out, labels).to(device)
