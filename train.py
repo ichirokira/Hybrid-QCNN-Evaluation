@@ -20,8 +20,8 @@ args.add_argument('--batch_size', '-b', default=1, type=int, help='Batch size of
 args.add_argument('--num_epoches', default=10, type=int, help='Number of Epoches')
 args.add_argument('--num_iter', default=500, type=int, help='Number of iter per epoch')
 args.add_argument('--n_test', default=5, type=int, help='Interval of evaluation')
-args.add_argument('--save_log', default='tools/eval_stats/random', type=int, help='Saving Log file dir')
-args.add_argument('--save_pretrained', default='tools/eval_stats/random', type=int, help='Saving pretrained file dir')
+args.add_argument('--save_log', default='tools/eval_stats/random', type=str, help='Saving Log file dir')
+args.add_argument('--save_pretrained', default='tools/eval_stats/random', type=str, help='Saving pretrained file dir')
 ap = args.parse_args()
 
 
@@ -36,7 +36,7 @@ X_test = datasets.MNIST(root='./data', train=False, download=True,
 idx = (X_test.targets == 0) | (X_test.targets == 6) | (X_test.targets == 9)
 X_test.targets = X_test.targets[idx]
 X_test.data = X_test.data[idx]
-test_loader = torch.utils.data.DataLoader(X_test, batch_size=ap.batch_size, shuffle=True)
+test_loader = torch.utils.data.DataLoader(X_test, batch_size=ap.batch_size, shuffle=False)
 
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 

@@ -4,7 +4,10 @@ import torch.nn.functional as F
 class Hybrid_RQCNN(nn.Module):
   def __init__(self, kernel_size, depth, circuit_layers, device, method, num_classes=3):
     super(Hybrid_RQCNN, self).__init__()
-    self.rqcnn = RQCNN(kernel_size=2, depth=4, device=device, circuit_layers=1, method=method)
+    if method == "structure_position":
+      self.rqcnn= SPQCNN(kernel_size=2, depth=4, device=device, circuit_layers=4*4, method=method)
+    else:
+      self.rqcnn = RQCNN(kernel_size=2, depth=4, device=device, circuit_layers=1, method=method)
     self.pool = nn.MaxPool2d(2)
     self.fc1 = nn.Linear(13*13*4, 64)
     self.fc2 = nn.Linear(64,num_classes)
